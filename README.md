@@ -34,10 +34,6 @@
 ### Association
 - belongs_to :user
 - has_one :purchase_record
-- has_one :item_status
-- has_one :item_prefecture
-- has_one :shipping_fee
-- has_one :scheduled_delivery
 
 
 ## purchase_recordsテーブル
@@ -66,4 +62,3 @@
 
 ### Association
 - belongs_to :purchase_record
-- has_one :buyer_prefecture
