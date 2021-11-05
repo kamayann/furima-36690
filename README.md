@@ -18,18 +18,17 @@
 
 ## itemsテーブル
 
-| Column              | Type       | Options                        |
-| ------------------- | ---------- | ------------------------------ |
-| image               | string     | null: false                    |
-| name                | string     | null: false                    |
-| info                | text       | null: false                    |
-| category            | text       | null: false                    |
-| item_status         | integer    | null: false                    |
-| shipping_fee        | integer    | null: false                    |
-| item_prefecture     | integer    | null: false                    |
-| scheduled_delivery  | integer    | null: false                    |
-| price               | integer    | null: false                    |
-| user                | references | null: false, foreign_key: true |
+| Column                | Type       | Options                        |
+| --------------------- | ---------- | ------------------------------ |
+| name                  | string     | null: false                    |
+| info                  | text       | null: false                    |
+| category_id           | integer    | null: false                    |
+| item_status_id        | integer    | null: false                    |
+| shipping_fee_id       | integer    | null: false                    |
+| prefecture_id         | integer    | null: false                    |
+| scheduled_delivery_id | integer    | null: false                    |
+| price                 | integer    | null: false                    |
+| user                  | references | null: false, foreign_key: true |
 
 
 ### Association
@@ -57,12 +56,12 @@
 ## buyer_informationsテーブル
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| postal_code        | integer    | null: false                    |
-| buyer_prefecture   | integer    | null: false                    |
+| postal_code        | string     | null: false                    |
+| prefecture_id      | integer    | null: false                    |
 | city               | string     | null: false                    |
 | house_number       | string     | null: false                    |
 | building_name      | string     |                                |
-| phone_number       | integer    | null: false                    |
+| phone_number       | string     | null: false                    |
 | purchase_record    | references | null: false, foreign_key: true |
 
 ### Association
