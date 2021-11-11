@@ -5,9 +5,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new
-    unless user_signed_in?
-      redirect_to new_user_session_path
-    end
+    redirect_to new_user_session_path unless user_signed_in?
   end
 
   def create
@@ -19,10 +17,10 @@ class ItemsController < ApplicationController
     end
   end
 
-  private 
-  
-  def item_params
-    params.require(:item).permit([:image, :name, :info, :category_id, :item_status_id, :shipping_fee_id, :prefecture_id, :scheduled_delivery_id, :price]).merge(user_id: current_user.id)
-  end
+  private
 
+  def item_params
+    params.require(:item).permit([:image, :name, :info, :category_id, :item_status_id, :shipping_fee_id, :prefecture_id,
+                                  :scheduled_delivery_id, :price]).merge(user_id: current_user.id)
+  end
 end
