@@ -10,11 +10,10 @@ class BuyerPurchase
     validates :city  
     validates :house_number
     validates :phone_number, format: {with:/\A[0-9]{10,11}\z/} 
-    validates :purchase_record_id
   end
 
     def save
       purchase_record = PurchaseRecord.create(user_id: user_id, item_id: item_id)
-      BuyerInformation.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, house_number: house_number, building_name: building_name, phone_number: phone_number, purchase_record_id: purchase_Record.id)
+      BuyerInformation.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, house_number: house_number, building_name: building_name, phone_number: phone_number, purchase_record_id: purchase_record.id)
     end
 end

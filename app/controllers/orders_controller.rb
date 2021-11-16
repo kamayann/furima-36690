@@ -1,11 +1,10 @@
 class OrdersController < ApplicationController
   def index
-    @item = Item.find(params[:item_id])
+    @item = Item.includes(:user).find(params[:item_id])
     @buyer_purchase = BuyerPurchase.new
   end
 
   def create
-    binding.pry
     @buyer_purchase = BuyerPurchase.new(buyer_purchase_params)
     if @buyer_purchase.valid?
       @buyer_purchase.save
@@ -18,6 +17,6 @@ class OrdersController < ApplicationController
   private
   
   def buyer_purchase_params
-    params.require(:buyer_purchase).permit(:postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(user_id: current_user.id, item_id: @item.id, purchase_record_id: purchase_record.id)
+    params.require(:buyer_purchase).permit(:postal_code, :prefecture_id, :city, :house_number, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 end
