@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    @item = Item.includes(:user).find(params[:item_id])
+    @item = Item.find(params[:item_id])
     @buyer_purchase = BuyerPurchase.new
   end
 
@@ -10,7 +10,8 @@ class OrdersController < ApplicationController
       @buyer_purchase.save
       redirect_to root_path
     else
-      render :new
+      @item = Item.find(params[:item_id])
+      render :index
     end
   end
 
