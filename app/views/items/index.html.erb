@@ -125,12 +125,12 @@
         <div class='item-img-content'>
           <%= image_tag item.image, class: "item-img" %>
 
-          <%# ** 商品購入実装後再度修正 ** %>
+          <%if item.purchase_record.present?%>
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
-          <%# ** 商品購入実装後再度修正 ** %>
-
+          <%end%>
+          
         </div>
         <div class='item-info'>
           <h3 class='item-name'>
