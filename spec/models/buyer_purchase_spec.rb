@@ -3,7 +3,15 @@ require 'rails_helper'
 RSpec.describe BuyerPurchase, type: :model do
   describe '購入者情報の保存' do
     before do
+      @user = FactoryBot.create(:user)
+      @another_user = FactoryBot.create(:user)
+      @item = FactoryBot.build(:item, user_id: @another_user.id)
+      @item.image = fixture_file_upload('app/assets/images/test.jpeg')
+      @item.save
       @buyer_purchase = FactoryBot.build(:buyer_purchase)
+      @buyer_purchase.user_id = @user.id
+      @buyer_purchase.item_id = @item.id 
+      sleep 0.05
     end
 
     context '内容に問題ない場合' do
@@ -51,8 +59,18 @@ RSpec.describe BuyerPurchase, type: :model do
         @buyer_purchase.valid?
         expect(@buyer_purchase.errors.full_messages).to include("Phone number can't be blank")
       end
-      it 'phone_numberが10、11桁以外だと保存できないこと' do
+      it 'phone_numberが9桁以下だと保存できないこと' do
         @buyer_purchase.phone_number = '123456789'
+        @buyer_purchase.valid?
+        expect(@buyer_purchase.errors.full_messages).to include('Phone number is invalid')
+      end
+      it 'phone_numberが12桁以上だと保存できないこと' do
+        @buyer_purchase.phone_number = '123456789012'
+        @buyer_purchase.valid?
+        expect(@buyer_purchase.errors.full_messages).to include('Phone number is invalid')
+      end
+      it 'phone_numberが半角数字以外が含まれている場合は保存できないこと' do
+        @buyer_purchase.phone_number = '１２３４５６７８９０'
         @buyer_purchase.valid?
         expect(@buyer_purchase.errors.full_messages).to include('Phone number is invalid')
       end
@@ -60,6 +78,16 @@ RSpec.describe BuyerPurchase, type: :model do
         @buyer_purchase.token = nil
         @buyer_purchase.valid?
         expect(@buyer_purchase.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'userが紐付いていないと保存できないこと' do
+        @buyer_purchase.user_id = nil
+        @buyer_purchase.valid?
+        expect(@buyer_purchase.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが紐づいていないと保存できないこと' do
+        @buyer_purchase.item_id = nil
+        @buyer_purchase.valid?
+        expect(@buyer_purchase.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
